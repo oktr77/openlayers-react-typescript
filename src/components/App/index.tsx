@@ -1,6 +1,11 @@
 import React from 'react';
-import Map from 'components/Map';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
+import Map from 'components/Map';
+import Navigation from 'components/Navigation';
+import LayerControl from 'components/LayerControl';
+import About from 'components/About';
+
 
 const GlobalStyle = createGlobalStyle`
   html, body, #app-root {
@@ -18,10 +23,16 @@ interface IProps {
 }
 
 const App = (props: IProps) => (
-  <>
+  <BrowserRouter>
     <GlobalStyle/>
     <Map/>
-  </>
+    <Navigation/>
+
+    <Routes>
+      <Route path='/layers' element={<LayerControl/>} />
+      <Route path='/about' element={<About/>} />
+    </Routes>
+  </BrowserRouter>
 );
 
 export default App;
