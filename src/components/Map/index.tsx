@@ -1,59 +1,25 @@
-import React from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import styled from 'styled-components';
-import OLMap from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import XYZ from 'ol/source/XYZ';
-import { ScaleLine } from 'ol/control';
+import { useMapContext } from 'components/MapContextProvider';
 
 interface IProps {
   className?: string;
-  mapRef?: (olMap: OLMap) => void;
 }
 
-class Map extends React.Component<IProps> {
-  private mapElementRef: React.RefObject<HTMLDivElement> = React.createRef();
+const Map = ({ className }: IProps) => {
+  const mapElementRef = useRef();
+  const map = useMapContext();
 
-  async componentDidMount() {
-    const map = new OLMap({
-      target: this.mapElementRef.current,
-      view: new View({
-        center: [0, 0],
-        zoom: 2,
-      }),
-      layers: [
-        new TileLayer({
-          source: new XYZ({
-            url: 'http://mt{0-2}.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}&s=Ga',
-          }),
-        }),
-      ],
-      controls: [
-        new ScaleLine({
-          units: 'metric',
-        }),
-      ],
-    });
-
+  useEffect(() => {
+    map.setTarget(mapElementRef.current);
     window.onresize = () => map.updateSize();
 
-    const { mapRef } = this.props;
-    if (mapRef) {
-      mapRef(map);
-    }
-  }
+    return () => map.setTarget(undefined);
+  }, []);
 
-  shouldComponentUpdate() {
-    return false;
-  }
-  
-  render() {
-    const { className } = this.props;
-
-    return (
-      <div className={className} ref={this.mapElementRef}/>
-    );
-  }
+  return (
+    <div className={className} ref={mapElementRef}/>
+  );
 }
 
 const StyledMap = styled(Map)`
@@ -62,4 +28,4 @@ const StyledMap = styled(Map)`
   margin: 0;
 `;
 
-export default StyledMap;
+export default memo(StyledMap, () => true);

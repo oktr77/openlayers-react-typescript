@@ -5,6 +5,7 @@ import Map from 'components/Map';
 import Navigation from 'components/Navigation';
 import LayerControl from 'components/LayerControl';
 import About from 'components/About';
+import MapContextProvider from 'components/MapContextProvider';
 
 
 const GlobalStyle = createGlobalStyle`
@@ -25,8 +26,10 @@ interface IProps {
 const App = (props: IProps) => (
   <BrowserRouter>
     <GlobalStyle/>
-    <Map/>
-    <Navigation/>
+    <MapContextProvider>
+      <Map/>
+      <Navigation/>
+    </MapContextProvider>
 
     <Routes>
       <Route path='/layers' element={<LayerControl/>} />
