@@ -33,6 +33,10 @@ export const MapContext = createContext<OLMap>(null);
 const MapContextProvider = ({ children }: PropsWithChildren) => {
   const map = createMap();
 
+  //only for browser console use
+  //@ts-ignore
+  window.map = map;
+
   return (
     <MapContext.Provider value={map}>{children}</MapContext.Provider>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Map from 'components/Map';
+import MapsList from 'components/MapsList';
 import Navigation from 'components/Navigation';
 import LayerControl from 'components/LayerControl';
 import About from 'components/About';
@@ -31,6 +32,7 @@ const App = () => (
         <Routes>
           <Route path='/layers' element={<LayerControl/>}/>
           <Route path='/about' element={<About/>}/>
+          <Route path='/maps' element={<MapsList/>}/>
         </Routes>
       </MainContent>
     </MapContextProvider>

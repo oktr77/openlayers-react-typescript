@@ -10,6 +10,10 @@ const menuItems = [
     to: '/layers',
   },
   {
+    title: 'Maps',
+    to: '/maps',
+  },
+  {
     title: 'About',
     to: '/about',
   },
